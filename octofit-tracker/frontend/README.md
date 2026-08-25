@@ -1,4 +1,17 @@
-# React + Vite
+# OctoFit Tracker frontend
+
+The presentation tier expects `VITE_CODESPACE_NAME` to be defined in
+`.env.local` when the API is running in GitHub Codespaces:
+
+```text
+VITE_CODESPACE_NAME=your-codespace-name
+```
+
+The app requests API resources from
+`https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/[component]/`.
+When the variable is unset, it safely falls back to `http://localhost:8000`.
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
