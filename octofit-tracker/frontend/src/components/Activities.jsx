@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection } from '../api.js'
+import { collectionFrom } from '../api.js'
+
+const activitiesEndpoint = import.meta.env.VITE_CODESPACE_NAME?.trim()
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME.trim()}-8000.app.github.dev/api/activities/`
+  : 'http://localhost:8000/api/activities/'
 
 function Activities() {
   const [activities, setActivities] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchCollection('activities').then(setActivities).catch((reason) => setError(reason.message))
+    fetch(activitiesEndpoint).then((response) => {
+      if (!response.ok) throw new Error('Could not load activities')
+      return response.json()
+    }).then((payload) => setActivities(collectionFrom(payload))).catch((reason) => setError(reason.message))
   }, [])
 
   return (
